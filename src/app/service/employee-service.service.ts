@@ -9,7 +9,7 @@ import { Employee } from '../employee';
 export class EmployeeServiceService {
 
   private baseUrl = "http://localhost:8080/api/v1";
-  
+
   constructor(private httpClient: HttpClient) { }
 
   public getEmployeesList(): Observable<Employee[]> {
@@ -17,7 +17,16 @@ export class EmployeeServiceService {
   }
 
   public createEmployee(employee: Employee): Observable<Object> {
-    const url = `${this.baseUrl}/addEmployee`; // Include the ID in the URL if needed
-    return this.httpClient.post<Object>(url, employee); // Include the employee data in the POST request
+    const url = `${this.baseUrl}/addEmployee`; 
+    return this.httpClient.post<Object>(url, employee); 
+  }
+
+  public getEmployeeById(id: number): Observable<Employee> {
+    return this.httpClient.get<Employee>(`${this.baseUrl}/${id}`);
+  }
+
+  public updateEmployee(id:number, employee: Employee): Observable<Employee> {
+    const url = `${this.baseUrl}/employees/${employee.id}`; 
+    return this.httpClient.put<Employee>(url, employee); 
   }
 }
